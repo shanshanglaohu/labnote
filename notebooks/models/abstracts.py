@@ -5,8 +5,11 @@ from django.contrib.contenttypes.fields import GenericForeignKey
 
 
 class BaseAbstractModel(models.Model):
+    """
+    base class of project and notebook
+    """
 
-    description = models.TextField("Description")
+    description = models.TextField("Description", blank=True, null=True)
 
     first_created = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now=True)
@@ -16,6 +19,9 @@ class BaseAbstractModel(models.Model):
 
 
 class BaseTagAbstractModel(models.Model):
+    """
+    base class of Tag
+    """
     content_type = models.ForeignKey(ContentType,
                                      related_name="content_type_set_for_%(class)s",
                                      on_delete=models.CASCADE
