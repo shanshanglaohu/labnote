@@ -8,6 +8,7 @@ from mptt.models import MPTTModel, TreeForeignKey
 from .abstracts import BaseAbstractModel
 
 
+@python_2_unicode_compatible
 class Project(BaseAbstractModel):
     """
     Organize Research with projects.
@@ -22,7 +23,6 @@ class Project(BaseAbstractModel):
     author = models.ForeignKey(User)
     team = models.ForeignKey(Group, blank=True, null=True)
 
-    @python_2_unicode_compatible
     def __str__(self):
         return self.name
 
@@ -31,6 +31,7 @@ class Project(BaseAbstractModel):
         verbose_name_plural = _("Projects")
 
 
+@python_2_unicode_compatible
 class Folder(MPTTModel, BaseAbstractModel):
     """
 
@@ -44,7 +45,6 @@ class Folder(MPTTModel, BaseAbstractModel):
     parent = TreeForeignKey('self', null=True, blank=True, related_name='children', db_index=True)
     project = models.ForeignKey(Project, blank=True, null=True)
 
-    @python_2_unicode_compatible
     def __str__(self):
         return self.name
 

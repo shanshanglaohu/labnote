@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'notebooks',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
