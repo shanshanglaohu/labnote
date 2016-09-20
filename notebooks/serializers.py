@@ -8,7 +8,7 @@ from .models import Project, Folder, Notebook, Text, Table, Attachment
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('id', 'username', 'first_name', 'last_name')
+        fields = ('id', 'username', 'first_name', 'last_name', 'email')
 
 
 class GroupSerializer(serializers.ModelSerializer):

@@ -8,6 +8,8 @@ from rest_framework.parsers import JSONParser
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
+from rest_framework import mixins
+from rest_framework import generics
 
 from .models import Project, Folder, Table, Text, Notebook, Attachment
 from .serializers import ProjectSerializer, FolderSerializer, TableSerializer,\
@@ -74,3 +76,48 @@ class NotebookDetail(APIView):
         notebook = self.get_object(pk)
         notebook.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class UsersList(
+    mixins.ListModelMixin,
+    mixins.CreateModelMixin,
+    generics.GenericAPIView
+):
+    """
+    List all users, or create a new user.
+    """
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)
+
+
+class UserDetail(
+    mixins.RetrieveModelMixin,
+    mixins.UpdateModelMixin,
+    mixins.DestroyModelMixin,
+    generics.GenericAPIView
+):
+    """
+    Retrieve one User, or update User profile, or delete User
+    """
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+    def _set_lookup_field(self):
+        return 'pk' if 'pk' in self.kwargs else 'username'
+
+    lookup_field = property(_set_lookup_field)
+
+    def get(self, request, *args, **kwargs):
+        return self.retrieve(request, *args, **kwargs)
+
+    def put(self, request, *args, **kwargs):
+        return self.update(request, *args, **kwargs)
+
+    def delete(self, request, *args, **kwargs):
+        return self.delete(request, *args, **kwargs)
