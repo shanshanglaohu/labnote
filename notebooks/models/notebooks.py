@@ -19,7 +19,9 @@ class Notebook(BaseAbstractModel):
 
     project = models.ForeignKey(Project, blank=True, null=True)
     folder = models.ForeignKey(Folder, blank=True, null=True)
-    author = models.ForeignKey(User, blank=True, null=True)
+    author = models.ForeignKey(
+        User, blank=True, null=True, on_delete=models.CASCADE, related_name='notebooks'
+    )
     Group = models.ForeignKey(Group, blank=True, null=True)
 
     def __str__(self):

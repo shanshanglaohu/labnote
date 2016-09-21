@@ -6,9 +6,13 @@ from .models import Project, Folder, Notebook, Text, Table, Attachment
 
 
 class UserSerializer(serializers.ModelSerializer):
+    # notebooks = serializers.HyperlinkedIdentityField(
+    #     many=True, view_name='user-notebook-list', read_only=True
+    # )
+
     class Meta:
         model = User
-        fields = ('id', 'username', 'first_name', 'last_name', 'email')
+        fields = ('id', 'username', 'email',)
 
 
 class GroupSerializer(serializers.ModelSerializer):
@@ -27,6 +31,8 @@ class FolderSerializer(serializers.ModelSerializer):
 
 
 class NotebookSerializer(serializers.ModelSerializer):
+    author = serializers.ReadOnlyField(source='author.username')
+
     class Meta:
         model = Notebook
 

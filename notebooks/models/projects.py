@@ -20,8 +20,10 @@ class Project(BaseAbstractModel):
     )
 
     # todo: write a User pro application and change the foreignkey to new user model
-    author = models.ForeignKey(User)
-    team = models.ForeignKey(Group, blank=True, null=True)
+    author = models.ForeignKey(
+        User, null=True, blank=True, on_delete=models.CASCADE, related_name='projects'
+    )
+    team = models.ForeignKey(Group, blank=True, null=True, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
